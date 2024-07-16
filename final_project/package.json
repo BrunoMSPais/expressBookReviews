@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Express", "Node", "API", "JWT"],
+  "author": "Bruno Pais",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.1",
