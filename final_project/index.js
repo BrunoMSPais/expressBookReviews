@@ -22,9 +22,9 @@ app.use("/customer/auth/*", function auth(req,res,next){
 
     jwt.verify(token, 'access', (err, user) => {
         if (err) {
-            return res.status(403).json({
+            return res.status(403).send(JSON.stringify({
                 message: 'User is not authenticated'
-            })
+            }), null, 4);
         }
         
         req.user = user;
