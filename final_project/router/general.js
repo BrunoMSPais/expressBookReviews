@@ -82,10 +82,11 @@ public_users.get('/author/:author', async function (req, res) {
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
+public_users.get('/title/:title', async function (req, res) {
     let title = req.params.title;
-  
-    let bookEntries = Object.entries(books);
+    const booksAPICall = await getBooks();
+    const bookList = booksAPICall.data;
+    let bookEntries = Object.entries(bookList);
   
     for(let entrie in bookEntries) {
       if (bookEntries[entrie][1].title.toLowerCase().includes(title.toLowerCase())) {
