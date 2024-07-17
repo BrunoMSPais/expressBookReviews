@@ -65,11 +65,12 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 });
   
 // Get book details based on author
-public_users.get('/author/:author',function (req, res) {
+public_users.get('/author/:author', async function (req, res) {
   //Write your code here
   let theAuthor = req.params.author.toLowerCase();
-
-  let bookEntries = Object.entries(books);
+  const booksAPICall = await getBooks();
+  const bookList = booksAPICall.data;
+  let bookEntries = Object.entries(bookList);
 
   for(let entrie in bookEntries) {
     if (bookEntries[entrie][1].author.toLowerCase().includes(theAuthor)) {
