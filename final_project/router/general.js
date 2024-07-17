@@ -52,11 +52,12 @@ public_users.get('/',async function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
+public_users.get('/isbn/:isbn', async function (req, res) {
   //Write your code here
   let isbn = req.params.isbn;
-
-  let book = books[isbn];
+  const booksAPICall = await getBooks();
+  const bookList = booksAPICall.data;
+  let book = bookList[isbn];
 
   if (!book) return res.status(404).send(JSON.stringify({ message: 'Book not found' }, null, 4));
 
