@@ -50,13 +50,28 @@ regd_users.post("/login", (req,res) => {
         accessToken
     }
 
-    return res.status(200).send(JSON.stringify({ message: "User successfully logged in", token: accessToken }, null, 4));
+    return res.status(200).send(JSON.stringify({ message: "User successfully logged in" }, null, 4));
 });
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  let username = req.user.data.username;
+  let isbn = req.params.isbn;
+  const { comment, rate } = req.query;
+  let book = books[isbn];
+  let review = { comment, rate };
+
+  if (book.reviews[username]) {
+    let theReview = book.reviews[username];
+    book.reviews[username] = { comment, rate };
+
+    return res.status(200).json({ [username]: { comment, rate } });
+  }
+
+  book.reviews = { ...book.reviews, [username]: { comment, rate } };
+
+  return res.status(201).json({ [username]: { ...book.reviews[username] } });
 });
 
 module.exports.authenticated = regd_users;
